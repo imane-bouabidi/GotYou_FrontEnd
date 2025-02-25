@@ -1,18 +1,23 @@
 <div class="login-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Connexion</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="loginForm">
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Mot de passe" formControlName="password">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Se Connecter</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+  <div class="login-card">
+    <h2 class="login-title">Connexion</h2>
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" formControlName="email" placeholder="exemple@email.com">
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+          Veuillez entrer une adresse email valide.
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input type="password" class="form-input" formControlName="password" placeholder="••••••••">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+          Le mot de passe doit contenir au moins 8 caractères.
+        </div>
+      </div>
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">Se Connecter</button>
+      <p class="login-link">Pas de compte ? <a routerLink="register">S'inscrire</a></p>
+    </form>
+  </div>
 </div>
