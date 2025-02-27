@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/services/auth/auth.service';
 
 @Component({
@@ -14,9 +14,9 @@ import {AuthService} from '../../../core/services/auth/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(5)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
@@ -24,12 +24,13 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
-        next: (response) => {
-          console.log('Connexion réussie', response);
+        next: (response: any) => {
+          this.authService.setToken(response.token);
+          this.router.navigate(['']);
         },
         error: (error) => {
           console.error('Erreur de connexion', error);
-        }
+        },
       });
     }
   }
