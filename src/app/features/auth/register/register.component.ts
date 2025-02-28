@@ -16,10 +16,14 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService,private router: Router) {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.minLength(5)]],
+      lastName: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      cin: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9]{5,10}$/)]],
+      birthDate: ['', [Validators.required]]
     }, { validator: this.passwordMatchValidator });
   }
 
@@ -37,7 +41,10 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
+      const rawBirthDate = this.registerForm.get('birthDate')?.value;
+      const birthDate = new Date(rawBirthDate).toISOString();
+      this.authService.register({
+        ...this.registerForm.value,birthDate: birthDate }).subscribe({
         next: (response) => {
           console.log('Inscription réussie', response);
           this.router.navigate(['login']);

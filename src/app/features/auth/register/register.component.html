@@ -3,6 +3,13 @@
     <h2 class="register-title">Inscription</h2>
     <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-input" formControlName="username" placeholder="Nom d'utilisateur">
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
+          Le nom d'utilisateur doit contenir entre 5 et 20 caractères.
+        </div>
+      </div>
+      <div class="form-group">
         <label class="form-label">Nom</label>
         <input type="text" class="form-input" formControlName="name" placeholder="Votre nom">
         <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-message">

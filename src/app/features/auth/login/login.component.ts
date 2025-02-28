@@ -23,15 +23,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (response: any) => {
-          this.authService.setToken(response.token);
-          this.router.navigate(['']);
-        },
-        error: (error) => {
-          console.error('Erreur de connexion', error);
-        },
-      });
+      this.authService.login(this.loginForm.value).subscribe();
     }
   }
 }
