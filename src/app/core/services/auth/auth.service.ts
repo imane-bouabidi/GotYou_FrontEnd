@@ -26,7 +26,7 @@ export class AuthService {
       tap({
         next: (response: any) => {
           this.setToken(response.token);
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Erreur de connexion', error);

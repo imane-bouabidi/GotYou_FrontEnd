@@ -1,44 +1,267 @@
 <div class="register-container">
   <div class="register-card">
     <h2 class="register-title">Inscription</h2>
-    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label class="form-label">Username</label>
-        <input type="text" class="form-input" formControlName="username" placeholder="Nom d'utilisateur">
-        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
-          Le nom d'utilisateur doit contenir entre 5 et 20 caractères.
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Nom</label>
-        <input type="text" class="form-input" formControlName="name" placeholder="Votre nom">
-        <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-message">
-          Veuillez entrer votre nom.
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-input" formControlName="email" placeholder="exemple@email.com">
-        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
-          Veuillez entrer une adresse email valide.
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mot de passe</label>
-        <input type="password" class="form-input" formControlName="password" placeholder="••••••••">
-        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-          Le mot de passe doit contenir au moins 8 caractères.
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Confirmer le mot de passe</label>
-        <input type="password" class="form-input" formControlName="confirmPassword" placeholder="••••••••">
-        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
-          Les mots de passe ne correspondent pas.
-        </div>
-      </div>
-      <button type="submit" class="register-button" [disabled]="registerForm.invalid">S'inscrire</button>
-      <p class="register-link">Déjà un compte ? <a routerLink="login">Se connecter</a></p>
-    </form>
+
+    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+      <mat-tab label="Étudiant">
+        <form class="register-form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+          <!-- Informations de base -->
+          <h3>Informations personnelles</h3>
+          <div class="form-group">
+            <label class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-input" formControlName="userName" placeholder="Nom d'utilisateur">
+            <div *ngIf="studentForm.get('userName')?.invalid && studentForm.get('userName')?.touched" class="error-message">
+              Le nom d'utilisateur doit contenir au moins 5 caractères.
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-input" formControlName="name" placeholder="Votre nom">
+              <div *ngIf="studentForm.get('name')?.invalid && studentForm.get('name')?.touched" class="error-message">
+                Veuillez entrer votre nom.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-input" formControlName="lastName" placeholder="Votre prénom">
+              <div *ngIf="studentForm.get('lastName')?.invalid && studentForm.get('lastName')?.touched" class="error-message">
+                Veuillez entrer votre prénom.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" formControlName="email" placeholder="exemple@email.com">
+            <div *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched" class="error-message">
+              Veuillez entrer une adresse email valide.
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Adresse</label>
+              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">
+              <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched" class="error-message">
+                Veuillez entrer votre adresse.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Ville</label>
+              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">
+              <div *ngIf="studentForm.get('city')?.invalid && studentForm.get('city')?.touched" class="error-message">
+                Veuillez entrer votre ville.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">
+            <div *ngIf="studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched" class="error-message">
+              Veuillez entrer un numéro de téléphone valide.
+            </div>
+          </div>
+
+          <mat-form-field>
+            <mat-label>Date de naissance</mat-label>
+            <input matInput [matDatepicker]="studentBirthPicker" formControlName="birthdate">
+            <mat-datepicker-toggle matIconSuffix [for]="studentBirthPicker"></mat-datepicker-toggle>
+            <mat-datepicker #studentBirthPicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Informations spécifiques étudiant -->
+          <h3>Informations académiques</h3>
+
+          <mat-form-field>
+            <mat-label>Genre</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option *ngFor="let gender of studentGenders" [value]="gender">
+                {{gender}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Niveau d'études</mat-label>
+            <mat-select formControlName="level">
+              <mat-option *ngFor="let level of studentLevels" [value]="level">
+                {{level}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Date de début des études</mat-label>
+            <input matInput [matDatepicker]="studentStartPicker" formControlName="startDate">
+            <mat-datepicker-toggle matIconSuffix [for]="studentStartPicker"></mat-datepicker-toggle>
+            <mat-datepicker #studentStartPicker></mat-datepicker>
+          </mat-form-field>
+
+          <div class="form-group">
+            <label class="form-label">Titre de la situation</label>
+            <input type="text" class="form-input" formControlName="situationTitle" placeholder="Titre décrivant votre situation">
+            <div *ngIf="studentForm.get('situationTitle')?.invalid && studentForm.get('situationTitle')?.touched" class="error-message">
+              Veuillez entrer un titre pour votre situation.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Détails de la situation</label>
+            <textarea class="form-input" formControlName="situationDetails" rows="4" placeholder="Décrivez votre situation en détail"></textarea>
+            <div *ngIf="studentForm.get('situationDetails')?.invalid && studentForm.get('situationDetails')?.touched" class="error-message">
+              Veuillez décrire votre situation (minimum 20 caractères).
+            </div>
+          </div>
+
+          <!-- Informations de connexion -->
+          <h3>Informations de connexion</h3>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-input" formControlName="password" placeholder="••••••••">
+            <div *ngIf="studentForm.get('password')?.invalid && studentForm.get('password')?.touched" class="error-message">
+              Le mot de passe doit contenir au moins 8 caractères.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirmer le mot de passe</label>
+            <input type="password" class="form-input" formControlName="confirmPassword" placeholder="••••••••">
+            <div *ngIf="studentForm.get('confirmPassword')?.invalid && studentForm.get('confirmPassword')?.touched" class="error-message">
+              Les mots de passe ne correspondent pas.
+            </div>
+          </div>
+
+          <button type="submit" class="register-button" [disabled]="studentForm.invalid">S'inscrire</button>
+          <p class="register-link">Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Donateur">
+        <form class="register-form" [formGroup]="donorForm" (ngSubmit)="onSubmit()">
+          <!-- Informations de base -->
+          <h3>Informations personnelles</h3>
+          <div class="form-group">
+            <label class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-input" formControlName="userName" placeholder="Nom d'utilisateur">
+            <div *ngIf="donorForm.get('userName')?.invalid && donorForm.get('userName')?.touched" class="error-message">
+              Le nom d'utilisateur doit contenir au moins 5 caractères.
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-input" formControlName="name" placeholder="Votre nom">
+              <div *ngIf="donorForm.get('name')?.invalid && donorForm.get('name')?.touched" class="error-message">
+                Veuillez entrer votre nom.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-input" formControlName="lastName" placeholder="Votre prénom">
+              <div *ngIf="donorForm.get('lastName')?.invalid && donorForm.get('lastName')?.touched" class="error-message">
+                Veuillez entrer votre prénom.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" formControlName="email" placeholder="exemple@email.com">
+            <div *ngIf="donorForm.get('email')?.invalid && donorForm.get('email')?.touched" class="error-message">
+              Veuillez entrer une adresse email valide.
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Adresse</label>
+              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">
+              <div *ngIf="donorForm.get('address')?.invalid && donorForm.get('address')?.touched" class="error-message">
+                Veuillez entrer votre adresse.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Ville</label>
+              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">
+              <div *ngIf="donorForm.get('city')?.invalid && donorForm.get('city')?.touched" class="error-message">
+                Veuillez entrer votre ville.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">
+            <div *ngIf="donorForm.get('phone')?.invalid && donorForm.get('phone')?.touched" class="error-message">
+              Veuillez entrer un numéro de téléphone valide.
+            </div>
+          </div>
+
+          <mat-form-field>
+            <mat-label>Date de naissance</mat-label>
+            <input matInput [matDatepicker]="donorBirthPicker" formControlName="birthdate">
+            <mat-datepicker-toggle matIconSuffix [for]="donorBirthPicker"></mat-datepicker-toggle>
+            <mat-datepicker #donorBirthPicker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Informations spécifiques donateur -->
+          <h3>Informations de donation</h3>
+
+          <div class="form-group">
+            <label class="form-label">Spécialité</label>
+            <input type="text" class="form-input" formControlName="speciality" placeholder="Votre domaine d'expertise">
+            <div *ngIf="donorForm.get('speciality')?.invalid && donorForm.get('speciality')?.touched" class="error-message">
+              Veuillez entrer votre spécialité.
+            </div>
+          </div>
+
+          <mat-form-field>
+            <mat-label>Type de donateur</mat-label>
+            <mat-select formControlName="donorType">
+              <mat-option *ngFor="let type of donorTypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="form-group">
+            <label class="form-label">Raison pour devenir donateur</label>
+            <textarea class="form-input" formControlName="reason" rows="4" placeholder="Expliquez pourquoi vous souhaitez devenir donateur"></textarea>
+            <div *ngIf="donorForm.get('reason')?.invalid && donorForm.get('reason')?.touched" class="error-message">
+              Veuillez expliquer votre motivation (minimum 20 caractères).
+            </div>
+          </div>
+
+          <!-- Informations de connexion -->
+          <h3>Informations de connexion</h3>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-input" formControlName="password" placeholder="••••••••">
+            <div *ngIf="donorForm.get('password')?.invalid && donorForm.get('password')?.touched" class="error-message">
+              Le mot de passe doit contenir au moins 8 caractères.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirmer le mot de passe</label>
+            <input type="password" class="form-input" formControlName="confirmPassword" placeholder="••••••••">
+            <div *ngIf="donorForm.get('confirmPassword')?.invalid && donorForm.get('confirmPassword')?.touched" class="error-message">
+              Les mots de passe ne correspondent pas.
+            </div>
+          </div>
+
+          <button type="submit" class="register-button" [disabled]="donorForm.invalid">S'inscrire</button>
+          <p class="register-link">Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
