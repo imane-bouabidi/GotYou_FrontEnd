@@ -1,8 +1,7 @@
 import {DonorTypeEnum} from './enums/donor-type.enum';
 import {DonationModel} from './Donation.model';
-import {User} from './User.model';
 
-export interface DonorModel extends User{
+export interface DonorModel{
   speciality: string;
   reason: string;
   donorType:DonorTypeEnum;

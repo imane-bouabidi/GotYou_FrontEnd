@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {User} from '../../models/User.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,16 +36,11 @@ export class AuthService {
     );
   }
 
-  register(userData: {
-    username: string,
-    name: string,
-    lastName: string,
-    email: string,
-    password: string,
-    cin: string,
-    birthDate: Date
-  }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, userData);
+  register(userData: User, userType : any): Observable<any> {
+    if (userType === 'student'){
+      return this.http.post(`${this.apiUrl}/auth/register/student`, userData);
+    }else
+      return this.http.post(`${this.apiUrl}/auth/register`, userData);
   }
 
   setToken(token: string): void {

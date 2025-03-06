@@ -5,7 +5,6 @@
     <mat-tab-group (selectedTabChange)="tabChanged($event)">
       <mat-tab label="Étudiant">
         <form class="register-form" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
-          <!-- Informations de base -->
           <h3>Informations personnelles</h3>
           <div class="form-group">
             <label class="form-label">Nom d'utilisateur</label>
@@ -41,29 +40,46 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Adresse</label>
-              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">
-              <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched" class="error-message">
-                Veuillez entrer votre adresse.
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Ville</label>
-              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">
-              <div *ngIf="studentForm.get('city')?.invalid && studentForm.get('city')?.touched" class="error-message">
-                Veuillez entrer votre ville.
-              </div>
+          <div class="form-group">
+            <label class="form-label">CIN</label>
+            <input type="text" class="form-input" formControlName="cin" placeholder="Votre CIN">
+            <div *ngIf="studentForm.get('cin')?.invalid && studentForm.get('cin')?.touched" class="error-message">
+              Veuillez entrer un CIN valide.
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label">Téléphone</label>
-            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">
-            <div *ngIf="studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched" class="error-message">
-              Veuillez entrer un numéro de téléphone valide.
+          <div class="form-row">
+<!--            <div class="form-group">-->
+<!--              <label class="form-label">Adresse</label>-->
+<!--              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">-->
+<!--              <div *ngIf="studentForm.get('address')?.invalid && studentForm.get('address')?.touched" class="error-message">-->
+<!--                Veuillez entrer votre adresse.-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--              <label class="form-label">Ville</label>-->
+<!--              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">-->
+<!--              <div *ngIf="studentForm.get('city')?.invalid && studentForm.get('city')?.touched" class="error-message">-->
+<!--                Veuillez entrer votre ville.-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="form-group">-->
+<!--            <label class="form-label">Téléphone</label>-->
+<!--            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">-->
+<!--            <div *ngIf="studentForm.get('phone')?.invalid && studentForm.get('phone')?.touched" class="error-message">-->
+<!--              Veuillez entrer un numéro de téléphone valide.-->
+<!--            </div>-->
+
+
+            <div class="form-group">
+              <label class="form-label">Major</label>
+              <input type="text" class="form-input" formControlName="major" placeholder="Your major">
+              <div *ngIf="studentForm.get('major')?.invalid && studentForm.get('major')?.touched" class="error-message">
+                Veuillez entrer une major valide.
+              </div>
             </div>
           </div>
 
@@ -74,7 +90,6 @@
             <mat-datepicker #studentBirthPicker></mat-datepicker>
           </mat-form-field>
 
-          <!-- Informations spécifiques étudiant -->
           <h3>Informations académiques</h3>
 
           <mat-form-field>
@@ -118,7 +133,6 @@
             </div>
           </div>
 
-          <!-- Informations de connexion -->
           <h3>Informations de connexion</h3>
           <div class="form-group">
             <label class="form-label">Mot de passe</label>
@@ -140,6 +154,13 @@
           <p class="register-link">Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
         </form>
       </mat-tab>
+
+
+
+      <!-- Donor Inscription -->
+
+
+
 
       <mat-tab label="Donateur">
         <form class="register-form" [formGroup]="donorForm" (ngSubmit)="onSubmit()">
@@ -180,30 +201,30 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Adresse</label>
-              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">
-              <div *ngIf="donorForm.get('address')?.invalid && donorForm.get('address')?.touched" class="error-message">
-                Veuillez entrer votre adresse.
-              </div>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <label class="form-label">Adresse</label>-->
+<!--              <input type="text" class="form-input" formControlName="address" placeholder="Votre adresse">-->
+<!--              <div *ngIf="donorForm.get('address')?.invalid && donorForm.get('address')?.touched" class="error-message">-->
+<!--                Veuillez entrer votre adresse.-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="form-group">
-              <label class="form-label">Ville</label>
-              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">
-              <div *ngIf="donorForm.get('city')?.invalid && donorForm.get('city')?.touched" class="error-message">
-                Veuillez entrer votre ville.
-              </div>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <label class="form-label">Ville</label>-->
+<!--              <input type="text" class="form-input" formControlName="city" placeholder="Votre ville">-->
+<!--              <div *ngIf="donorForm.get('city')?.invalid && donorForm.get('city')?.touched" class="error-message">-->
+<!--                Veuillez entrer votre ville.-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
 
-          <div class="form-group">
-            <label class="form-label">Téléphone</label>
-            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">
-            <div *ngIf="donorForm.get('phone')?.invalid && donorForm.get('phone')?.touched" class="error-message">
-              Veuillez entrer un numéro de téléphone valide.
-            </div>
-          </div>
+<!--          <div class="form-group">-->
+<!--            <label class="form-label">Téléphone</label>-->
+<!--            <input type="text" class="form-input" formControlName="phone" placeholder="Votre téléphone">-->
+<!--            <div *ngIf="donorForm.get('phone')?.invalid && donorForm.get('phone')?.touched" class="error-message">-->
+<!--              Veuillez entrer un numéro de téléphone valide.-->
+<!--            </div>-->
+<!--          </div>-->
 
           <mat-form-field>
             <mat-label>Date de naissance</mat-label>
@@ -212,7 +233,6 @@
             <mat-datepicker #donorBirthPicker></mat-datepicker>
           </mat-form-field>
 
-          <!-- Informations spécifiques donateur -->
           <h3>Informations de donation</h3>
 
           <div class="form-group">
@@ -240,7 +260,6 @@
             </div>
           </div>
 
-          <!-- Informations de connexion -->
           <h3>Informations de connexion</h3>
           <div class="form-group">
             <label class="form-label">Mot de passe</label>
