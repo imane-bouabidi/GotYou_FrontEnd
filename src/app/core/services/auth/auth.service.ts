@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {User} from '../../models/User.model';
+import {Student} from '../../models/Student.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = "http://localhost:8080/gotYou/api";
+  private userApiUrl = 'http://localhost:8080/gotYou/api/users';
+
   private tokenSubject = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -79,5 +82,21 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  getUserInfos(): Observable<any> {
+    // Get the authentication token from storage
+    const token = localStorage.getItem('auth_token'); // or however you store your token
+
+    // Create headers with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Include the headers and withCredentials option
+    return this.http.get<Student>(`${this.userApiUrl}/current`, {
+      headers: headers,
+      withCredentials: true // This helps with CORS when cookies need to be sent
+    });
   }
 }

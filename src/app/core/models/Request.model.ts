@@ -8,7 +8,7 @@ export interface Request {
   id : number;
   title : string;
   description : string;
-  requestDate : Date;
+  requestDate? : Date;
   reason : string;
   status : RequestStatus;
   amount : number;

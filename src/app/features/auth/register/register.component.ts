@@ -47,9 +47,6 @@ export class RegisterComponent {
       name: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      // address: ['', [Validators.required]],
-      // city: ['', [Validators.required]],
-      // phone: ['', [Validators.required, Validators.pattern(/^\d{8,10}$/)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       cin: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9]{5,10}$/)]],
       confirmPassword: ['', [Validators.required]],
@@ -67,9 +64,6 @@ export class RegisterComponent {
       name: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      // address: ['', [Validators.required]],
-      // city: ['', [Validators.required]],
-      // phone: ['', [Validators.required, Validators.pattern(/^\d{8,10}$/)]],
       cin: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9]{5,10}$/)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
@@ -110,10 +104,6 @@ export class RegisterComponent {
       if (formData.birthdate) {
         formData.birthdate = new Date(formData.birthdate).toISOString();
       }
-
-      // if (userType === 'student' && formData.startDate) {
-      //   formData.startDate = new Date(formData.startDate).toISOString();
-      // }
 
       this.authService.register(formData, userType).subscribe({
         next: (response) => {

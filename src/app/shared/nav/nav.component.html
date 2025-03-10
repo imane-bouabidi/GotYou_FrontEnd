@@ -8,6 +8,7 @@
       <a routerLink="register" class="nav-link">Inscription</a>
     </ng-container>
     <ng-container *ngIf="isAuthenticated()">
+      <p><p>Welcome {{userName}}</p>
     <a routerLink="logout" class="nav-link">Logout</a>
     </ng-container>
   </nav>
