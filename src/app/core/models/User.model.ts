@@ -10,12 +10,12 @@ export interface User {
   birthdate: Date;
   role: string;
   status: string;
-  situationDetails?: string;
-  situationTitle?: string;
-  startDate?: Date;
-  gender?: string;
-  level?: string;
-  speciality?: string;
-  reason?: string;
-  donorType?: string;
+  // situationDetails?: string;
+  // situationTitle?: string;
+  // startDate?: Date;
+  // gender?: string;
+  // level?: string;
+  // speciality?: string;
+  // reason?: string;
+  // donorType?: string;
 }

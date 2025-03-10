@@ -8,6 +8,6 @@ export interface CreateRequestDto{
   reason : string;
   status : RequestStatus;
   amount : number;
-  student : Student;
+  studentId : string;
   media? : Media[];
 }

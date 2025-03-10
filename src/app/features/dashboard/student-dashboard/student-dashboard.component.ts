@@ -59,14 +59,17 @@ export class StudentDashboardComponent implements OnInit{
   }
 
   loadRequests(): void {
+    console.log("here");
     this.studentService.getStudentRequests().subscribe({
       next: (data) => {
         this.requests = data;
+        console.log("data : " + data);
       },
       error: (err) => {
         console.error('Error fetching requests:', err);
       },
     });
+        console.log("requests : " + this.requests);
   }
 
   openAddRequestDialog(): void {

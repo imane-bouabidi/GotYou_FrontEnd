@@ -8,7 +8,7 @@
   </mat-toolbar>
 
   <div class="requests-table">
-    @if(requests) {
+    @if(requests && requests.length > 0) {
       <table mat-table [dataSource]="requests" class="mat-elevation-z8">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -51,8 +51,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     } @else {
-      <div>
-        No data
+      <div class="empty-state">
+        <mat-icon>info</mat-icon>
+        <p>Aucune demande disponible</p>
       </div>
     }
   </div>

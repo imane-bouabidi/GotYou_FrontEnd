@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import {User} from '../../models/User.model';
-import {Student} from '../../models/Student.model';
+import { User } from '../../models/User.model';
+import { Student } from '../../models/Student.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +15,26 @@ export class AuthService {
 
   private tokenSubject = new BehaviorSubject<string | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      this.tokenSubject.next(storedToken);
+    }
+  }
 
   login(credentials: { username: string, password: string }): Observable<any> {
-
     const params = new HttpParams()
       .set('username', credentials.username)
       .set('password', credentials.password);
 
-    return this.http.post(`${this.apiUrl}/auth/login`, {},{
+    return this.http.post(`${this.apiUrl}/auth/login`, {}, {
       params,
       responseType: 'text'
     }).pipe(
       tap({
-        next: (response: any) => {
-          this.setToken(response.token);
+        next: (response: string) => {
+          console.log('Login response:', response);
+          this.setToken(response);
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
@@ -39,11 +44,12 @@ export class AuthService {
     );
   }
 
-  register(userData: User, userType : any): Observable<any> {
-    if (userType === 'student'){
+  register(userData: User, userType: any): Observable<any> {
+    if (userType === 'student') {
       return this.http.post(`${this.apiUrl}/auth/register/student`, userData);
-    }else
+    } else {
       return this.http.post(`${this.apiUrl}/auth/register`, userData);
+    }
   }
 
   setToken(token: string): void {
@@ -52,32 +58,14 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    return token ? token.replace('Bearer ', '') : '';
   }
 
   logout(): void {
-    // const token = this.getToken();
-    // if (token) {
-    //   this.http.post(`${this.apiUrl}/auth/logout`, {}, {
-    //     headers: { 'Authorization': token }
-    //   }).subscribe({
-    //     next: () => {
-    //       console.log('Token invalidé avec succès');
-    //     },
-    //     error: (error) => {
-    //       console.error('Erreur lors de l\'invalidation du token', error);
-    //     },
-    //     complete: () => {
-    //       localStorage.removeItem('token');
-    //       this.tokenSubject.next(null);
-    //       this.router.navigate(['/login']);
-    //     }
-    //   });
-    // } else {
-      localStorage.removeItem('token');
-      this.tokenSubject.next(null);
-      this.router.navigate(['/login']);
-    // }
+    localStorage.removeItem('token');
+    this.tokenSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
@@ -85,18 +73,12 @@ export class AuthService {
   }
 
   getUserInfos(): Observable<any> {
-    // Get the authentication token from storage
-    const token = localStorage.getItem('auth_token'); // or however you store your token
+    const token = this.getToken();
 
-    // Create headers with the token
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    // Include the headers and withCredentials option
-    return this.http.get<Student>(`${this.userApiUrl}/current`, {
-      headers: headers,
-      withCredentials: true // This helps with CORS when cookies need to be sent
-    });
+    return this.http.get<Student>(`${this.userApiUrl}/current`, { headers });
   }
 }
