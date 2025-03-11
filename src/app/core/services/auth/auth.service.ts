@@ -35,7 +35,7 @@ export class AuthService {
         next: (response: string) => {
           console.log('Login response:', response);
           this.setToken(response);
-          this.router.navigate(['/dashboard']);
+          this.redirectUser();
         },
         error: (error) => {
           console.error('Erreur de connexion', error);
@@ -79,6 +79,21 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<Student>(`${this.userApiUrl}/current`, { headers });
+    return this.http.get<User>(`${this.userApiUrl}/current`, { headers });
+  }
+
+  redirectUser(): void {
+    this.getUserInfos().subscribe({
+      next: (user) => {
+        if (user.role === "STUDENT") {
+          this.router.navigate(['/dashboard']);
+        } else if (user.role === "DONOR") {
+          this.router.navigate(['/donor-dashboard']);
+        }
+      },
+      error: (err) => {
+        console.error("Erreur lors de la récupération des infos utilisateur:", err);
+      }
+    });
   }
 }

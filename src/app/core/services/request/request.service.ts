@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, switchMap} from 'rxjs';
 import {CreateRequestDto} from '../../models/dtos/CreateRequestDto.models';
 import {Student} from '../../models/Student.model';
 import {AuthService} from '../auth/auth.service';
+import {Request} from '../../models/Request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,13 @@ export class RequestService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+
+  getToken(){
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
   save(request: CreateRequestDto): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
@@ -28,4 +36,11 @@ export class RequestService {
       })
     );
   }
+
+  getAllRequests():Observable<Request[]>{
+    const headers = this.getToken();
+
+    return this.http.get<Request[]>(`${this.apiUrl}`, { headers })
+  }
+
 }

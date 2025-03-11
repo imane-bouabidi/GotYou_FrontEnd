@@ -5,6 +5,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import {LoginGuard} from './guards/login/login.guard';
 import {LogoutComponent} from './features/auth/logout/logout/logout.component';
 import {StudentDashboardComponent} from './features/dashboard/student-dashboard/student-dashboard.component';
+import {DonorDashboardComponent} from './features/donor/donor-dashboard/donor-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'logout', component: LogoutComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: StudentDashboardComponent },
+  { path: 'donor-dashboard', component: DonorDashboardComponent },
   { path: '**', redirectTo: '' }
 ];
