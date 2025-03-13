@@ -17,6 +17,7 @@ import {Observable} from 'rxjs';
 })
 export class NavComponent implements OnInit{
   userName: string = '';
+  user!: User;
   constructor(private authService: AuthService ) {}
 
   ngOnInit(): void {
@@ -32,6 +33,7 @@ export class NavComponent implements OnInit{
     this.authService.getUserInfos().subscribe({
       next: (user) => {
         this.userName = user.name || user.userName;
+        this.user = user;
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des informations utilisateur', error);

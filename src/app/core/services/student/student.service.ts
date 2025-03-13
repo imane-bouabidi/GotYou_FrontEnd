@@ -5,6 +5,7 @@ import {User} from '../../models/User.model';
 import {Observable} from 'rxjs';
 import {Request} from '../../models/Request.model';
 import {AuthService} from '../auth/auth.service';
+import {Student} from '../../models/Student.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,13 @@ export class StudentService {
 
     return this.http.get<Request[]>(`${this.apiUrl}/requests/student`, { headers });
   }
-  getStudentById(id: number): Observable<User>{
-    return this.http.get<User>(`${this.apiUrl}/students`);
+
+  getStudentById(id: number): Observable<Student>{
+    const token = this.authService.getToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<Student>(`${this.apiUrl}/students/${id}`, { headers });
   }
 }

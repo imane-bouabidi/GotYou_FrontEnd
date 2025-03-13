@@ -30,8 +30,8 @@ export class RequestService {
 
     return this.http.get<Student>(`${this.userApiUrl}/current`, { headers }).pipe(
       switchMap((student: Student) => {
-        request.studentId = student.id;
-        console.log(request.studentId);
+        request.student.id = student.id;
+        console.log(request.student.id);
         return this.http.post<any>(`${this.apiUrl}`, request, { headers });
       })
     );
@@ -41,6 +41,11 @@ export class RequestService {
     const headers = this.getToken();
 
     return this.http.get<Request[]>(`${this.apiUrl}`, { headers })
+  }
+
+  getRequestById(id: number): Observable<Request> {
+    const headers = this.getToken();
+    return this.http.get<Request>(`${this.apiUrl}/${id}`, { headers });
   }
 
 }

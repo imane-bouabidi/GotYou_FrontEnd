@@ -1,15 +1,35 @@
-<header class="header">
-  <h1 class="logo">GotYou</h1>
-  <nav class="nav">
-    <a routerLink="**" class="nav-link">Accueil</a>
-    <ng-container *ngIf="!isAuthenticated()">
+<header class="bg-white py-4 px-6 flex justify-between items-center">
+  <div class="flex items-center">
+    <div class="bg-blue-500 rounded-full p-2 mr-2">
+      Got
+    </div>
+    <span class="font-semibold text-gray-800">You</span>
+  </div>
 
-      <a routerLink="login" class="nav-link">Connexion</a>
-      <a routerLink="register" class="nav-link">Inscription</a>
-    </ng-container>
+  <nav class="hidden md:block">
+    <ul class="flex space-x-8">
+
+      <li><a href="#" class="text-gray-800 hover:text-blue-500">Home</a></li>
+      <div *ngIf="user.role == 'STUDENT'; else Donordash">
+        <li><a routerLink="dashboard" class="text-gray-800 hover:text-blue-500">Dashboard</a></li>
+      </div>
+      <ng-template #Donordash>
+        <li><a routerLink="donor-dashboard" class="text-gray-800 hover:text-blue-500">Dashboard</a></li>
+      </ng-template>
+      <ng-container *ngIf="!isAuthenticated()">
+      <a routerLink="login" class="text-gray-800 hover:text-blue-500">Connexion</a>
+      <a routerLink="register" class="text-gray-800 hover:text-blue-500">Inscription</a>
+      </ng-container>
     <ng-container *ngIf="isAuthenticated()">
-      <p><p>Welcome {{userName}}</p>
-    <a routerLink="logout" class="nav-link">Logout</a>
+    <a routerLink="logout" class="text-gray-800 hover:text-blue-500">Logout</a>
     </ng-container>
+
+    </ul>
   </nav>
+  <ng-container *ngIf="isAuthenticated()">
+  <div class="flex items-center space-x-4">
+<!--    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">Join</button>-->
+    <button class="border border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-50 transition">{{userName}}</button>
+  </div>
+    </ng-container>
 </header>

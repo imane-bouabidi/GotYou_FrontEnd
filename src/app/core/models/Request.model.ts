@@ -12,7 +12,8 @@ export interface Request {
   reason : string;
   status : RequestStatus;
   amount : number;
-  student : Student;
+  // student : Student;
+  student: Student;
   studentDonation? : StudentDonation[];
   donationBox? : DonationBox;
   media? : Media[];

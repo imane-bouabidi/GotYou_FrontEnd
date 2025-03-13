@@ -1,28 +1,126 @@
-<div class="container">
-  <main class="main-content">
-    <section class="hero">
-      <h2 class="hero-title">Bienvenue sur GotYou</h2>
-      <p class="hero-subtitle">La plateforme de parrainage pour les étudiants</p>
-      <button class="hero-button">Découvrir</button>
-    </section>
+<div class="w-full">
+  <section class="py-12 px-6 lg:px-16 flex flex-col lg:flex-row items-center justify-between">
+    <div class="w-full lg:w-1/2 mb-8 lg:mb-0">
+      <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Charity for the world better life</h1>
+      <p class="text-gray-600 mb-6">We provide a trusted donation channel for charity seekers</p>
+      <p class="text-gray-600 mb-8">Supporting groups and organizations</p>
+    </div>
 
-    <section class="features">
-      <div class="feature-card">
-        <h3 class="feature-title">Demandes de Parrainage</h3>
-        <p class="feature-description">Créez et suivez vos demandes de parrainage.</p>
-      </div>
-      <div class="feature-card">
-        <h3 class="feature-title">Dons</h3>
-        <p class="feature-description">Soutenez les étudiants dans le besoin.</p>
-      </div>
-      <div class="feature-card">
-        <h3 class="feature-title">Stories</h3>
-        <p class="feature-description">Partagez vos histoires et inspirez les autres.</p>
-      </div>
-    </section>
-  </main>
+    <div class="w-full lg:w-1/2 flex justify-center">
+      <img ngSrc="imgs/don.png"  alt="People helping each other"  height="650" width="650">
+    </div>
+  </section>
 
-  <footer class="footer">
-    <p class="footer-text">&copy; 2024 GotYou. Tous droits réservés.</p>
-  </footer>
+
+<!--  FEATURES section-->
+
+  <section class="py-16 px-6 lg:px-16 text-center bg-gray-50">
+    <h3 class="text-gray-500 uppercase tracking-widest text-sm mb-4">OUR FEATURES</h3>
+    <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-12">We believe we can save more life with you</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div *ngFor="let feature of features" class="p-6 bg-white rounded-lg shadow-sm">
+        <div class="flex justify-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+            <svg *ngIf="feature.icon === 'transparency'" class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg *ngIf="feature.icon === 'fundraise'" class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg *ngIf="feature.icon === 'realtime'" class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ feature.title }}</h3>
+        <p class="text-gray-600 text-sm">{{ feature.description }}</p>
+        <a href="#" class="mt-4 inline-flex items-center text-sm text-blue-500 hover:text-blue-700">
+          Learn more
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+<!--  requests card-->
+
+  <section class="py-16 px-6 lg:px-16">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Latest to donate</h2>
+    <div class="flex flex-wrap gap-6 container max-w-screen-xl mx-auto px-4">
+      @for(request of requests; track $index ){
+        <div class="flex-auto px-6 py-6 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] border-2 border-gray-200 rounded-3xl">
+          <img src="imgs/don.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
+
+          <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">{{request.title}}</h4>
+
+          <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">
+            {{request.description}}
+          </p>
+
+          <div class="flex items-center justify-between mb-8">
+            <h6 class="font-light text-gray-400 text-sm md:text-lg">
+              Goals :
+              <span class="font-semibold text-gray-900 text-md md:text-lg">{{ request.amount }} DH</span>
+            </h6>
+
+            <h6 class="font-light text-gray-400 text-sm md:text-lg">
+              Raised :
+              <span class="font-semibold text-gray-900 text-md md:text-lg">$13000</span>
+            </h6>
+          </div>
+
+          <div class="hidden md:block lg:flex items-center justify-between mb-8">
+            <div>
+              <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
+
+              <div class="w-60 h-2 bg-info rounded-lg relative"></div>
+            </div>
+
+            <p class="font-light text-gray-900 text-md">86%</p>
+          </div>
+
+          <button class="w-full py-4 bg-blue-800 font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
+            Donate
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+<!--  blue section-->
+
+  <section class="py-16 px-6 lg:px-16 bg-blue-500 text-white">
+    <h2 class="text-xl font-medium mb-8 text-center">You can help lots of people by donating</h2>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div *ngFor="let stat of stats" class="text-center">
+        <div class="mb-2">
+          <svg *ngIf="stat.value === '10000+'" class="w-6 h-6 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <svg *ngIf="stat.value === '$120M+'" class="w-6 h-6 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <svg *ngIf="stat.value === '1200+'" class="w-6 h-6 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+          </svg>
+          <svg *ngIf="stat.value === '98%'" class="w-6 h-6 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+          </svg>
+        </div>
+        <p class="text-2xl font-bold mb-1">{{ stat.value }}</p>
+        <p class="text-sm opacity-80">{{ stat.label }}</p>
+      </div>
+    </div>
+
+<!--    <div class="bg-blue-600 rounded-lg p-8 flex justify-center">-->
+<!--      <img ngSrc="imgs/don.png" height="500" width="500" alt="People helping each other" class="max-w-full">-->
+<!--    </div>-->
+  </section>
+
+
 </div>
