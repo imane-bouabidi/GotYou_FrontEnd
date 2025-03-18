@@ -6,13 +6,15 @@ import {MatIcon} from '@angular/material/icon';
 import {StudentService} from '../../../core/services/student/student.service';
 import {Student} from '../../../core/models/Student.model';
 import {RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-donor-dashboard',
   imports: [
     NgOptimizedImage,
     MatIcon,
-    RouterLink
+    RouterLink,
+    FormsModule
   ],
   templateUrl: './donor-dashboard.component.html',
   standalone: true,
@@ -22,6 +24,9 @@ export class DonorDashboardComponent implements OnInit{
 
   requests!: Request[];
   student! : Student;
+  searchKeyword: string = '';
+
+
   constructor(private requestService: RequestService, private studentService: StudentService ) {}
   ngOnInit() {
     this.LoadRequests();
@@ -55,5 +60,19 @@ export class DonorDashboardComponent implements OnInit{
     });
   }
 
+  searchRequests() {
+    if (this.searchKeyword) {
+      this.requestService.searchRequests(this.searchKeyword).subscribe({
+        next: (data) => {
+          this.requests = data;
+        },
+        error: (err) => {
+          console.error('Error searching requests:', err);
+        },
+      });
+    } else {
+      this.LoadRequests();
+    }
+  }
 
 }

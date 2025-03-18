@@ -4,6 +4,7 @@ import {RequestService} from '../../core/services/request/request.service';
 import {Request} from '../../core/models/Request.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import {DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
     NgForOf,
     NgOptimizedImage,
     DecimalPipe,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   standalone: true,

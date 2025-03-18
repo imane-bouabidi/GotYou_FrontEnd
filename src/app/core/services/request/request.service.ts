@@ -48,4 +48,9 @@ export class RequestService {
     return this.http.get<Request>(`${this.apiUrl}/${id}`, { headers });
   }
 
+
+  searchRequests(keyword: string): Observable<Request[]> {
+    const headers = this.getToken();
+    return this.http.get<Request[]>(`${this.apiUrl}/search?keyword=${keyword}`, { headers });
+  }
 }

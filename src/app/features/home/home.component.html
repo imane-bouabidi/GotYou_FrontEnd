@@ -1,20 +1,24 @@
-<div class="w-full">
-  <section class="py-12 px-6 lg:px-16 flex flex-col lg:flex-row items-center justify-between">
+<div class="w-full ">
+  <!-- Section principale -->
+  <section class="py-12 px-6 lg:px-16 flex flex-col lg:flex-row items-center justify-between max-w-screen-xl mx-auto">
     <div class="w-full lg:w-1/2 mb-8 lg:mb-0">
       <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Charity for the world better life</h1>
       <p class="text-gray-600 mb-6">We provide a trusted donation channel for charity seekers</p>
       <p class="text-gray-600 mb-8">Supporting groups and organizations</p>
+
+      <div class="flex items-center space-x-4">
+<!--            <button class="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded-full hover:bg-blue-600 transition">I Donate</button>-->
+        <button routerLink="/donor-dashboard" class="border cursor-pointer border-blue-900 bg-red-300 text-blue-900 px-4 py-2 rounded-full hover:bg-red-200 transition">I Donate </button>
+      </div>
     </div>
 
     <div class="w-full lg:w-1/2 flex justify-center">
-      <img ngSrc="imgs/don.png"  alt="People helping each other"  height="650" width="650">
+      <img ngSrc="imgs/don.png" alt="People helping each other" height="600" width="600">
     </div>
   </section>
 
-
-<!--  FEATURES section-->
-
-  <section class="py-16 px-6 lg:px-16 text-center bg-gray-50">
+  <!-- Section FEATURES -->
+  <section class="py-16 px-6 lg:px-16 text-center bg-gray-50 max-w-screen-xl mx-auto">
     <h3 class="text-gray-500 uppercase tracking-widest text-sm mb-4">OUR FEATURES</h3>
     <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-12">We believe we can save more life with you</h2>
 
@@ -45,55 +49,45 @@
     </div>
   </section>
 
-
-<!--  requests card-->
-
-  <section class="py-16 px-6 lg:px-16">
-    <h2 class="text-2xl font-bold text-gray-800 mb-8">Latest to donate</h2>
-    <div class="flex flex-wrap gap-6 container max-w-screen-xl mx-auto px-4">
+  <!-- Section requests card -->
+  <section class="py-16 px-6 lg:px-16 max-w-screen-xl mx-auto">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Sujets à la Une</h2>
+    <div class="flex flex-wrap gap-6 grid lg:grid-cols-4">
       @for(request of requests; track $index ){
-        <div class="flex-auto px-6 py-6 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] border-2 border-gray-200 rounded-3xl">
-          <img src="imgs/don.png" alt="Image" class="mb-6 hover:opacity-75 transition ease-in-out duration-500">
+        <div >
+          <!-- Carte 1 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <a routerLink="/requests/{{request.id}}">
+              <img class="w-full h-48 object-cover"
+                   src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80"
+                   alt="Image de la récolte de fonds">
+              <div class="p-6">
+                <p class="text-sm text-gray-500 mb-2">Angers, B5</p>
+                <h3 class="text-lg font-semibold mb-2">{{ request.title }}</h3>
+                <p class="text-gray-600 text-sm mb-4">{{ request.description }}</p>
 
-          <h4 class="font-semibold text-gray-900 text-lg md:text-2xl mb-6">{{request.title}}</h4>
+                <!--                <div class="flex justify-between text-sm text-gray-500 mb-2">-->
+                <!--                  <span>Last donation 11 days ago</span>-->
+                <!--                </div>-->
 
-          <p class="font-light text-gray-400 text-sm md:text-md lg:text-lg mb-10">
-            {{request.description}}
-          </p>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                  <div class="bg-blue-500 h-2 rounded-full" style="width: 82%"></div>
+                </div>
 
-          <div class="flex items-center justify-between mb-8">
-            <h6 class="font-light text-gray-400 text-sm md:text-lg">
-              Goals :
-              <span class="font-semibold text-gray-900 text-md md:text-lg">{{ request.amount }} DH</span>
-            </h6>
-
-            <h6 class="font-light text-gray-400 text-sm md:text-lg">
-              Raised :
-              <span class="font-semibold text-gray-900 text-md md:text-lg">$13000</span>
-            </h6>
+                <p class="text-sm">
+                  <span class="font-bold">€82,203</span> raised
+                  <span class="text-gray-500">of {{ request.amount }} DH</span>
+                </p>
+              </div>
+            </a>
           </div>
-
-          <div class="hidden md:block lg:flex items-center justify-between mb-8">
-            <div>
-              <div class="w-72 h-2 bg-info opacity-10 rounded-lg absolute"></div>
-
-              <div class="w-60 h-2 bg-info rounded-lg relative"></div>
-            </div>
-
-            <p class="font-light text-gray-900 text-md">86%</p>
-          </div>
-
-          <button class="w-full py-4 bg-blue-800 font-semibold text-white text-lg rounded-xl hover:bg-blue-700 transition ease-in-out duration-500">
-            Donate
-          </button>
         </div>
       }
     </div>
   </section>
 
-<!--  blue section-->
-
-  <section class="py-16 px-6 lg:px-16 bg-blue-500 text-white">
+  <!-- Section blue -->
+  <section class="py-16 px-6 lg:px-16 bg-blue-500 text-white max-w-screen-xl mx-auto">
     <h2 class="text-xl font-medium mb-8 text-center">You can help lots of people by donating</h2>
 
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -116,11 +110,5 @@
         <p class="text-sm opacity-80">{{ stat.label }}</p>
       </div>
     </div>
-
-<!--    <div class="bg-blue-600 rounded-lg p-8 flex justify-center">-->
-<!--      <img ngSrc="imgs/don.png" height="500" width="500" alt="People helping each other" class="max-w-full">-->
-<!--    </div>-->
   </section>
-
-
 </div>
