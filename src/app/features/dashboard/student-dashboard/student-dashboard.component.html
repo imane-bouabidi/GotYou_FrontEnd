@@ -2,12 +2,12 @@
   <mat-toolbar color="primary">
     <span>Vos Demandes</span>
     <span class="spacer"></span>
-    <button mat-icon-button class="cursor-pointer"  (click)="openAddRequestDialog()">
+    <button mat-icon-button class="cursor-pointer" (click)="openAddRequestDialog()">
       <mat-icon>add</mat-icon>
     </button>
   </mat-toolbar>
 
-  <div class="requests-table">
+  <div class="requests-table w-auto">
     @if(requests && requests.length > 0) {
       <table mat-table [dataSource]="requests" class="mat-elevation-z8">
         <!-- ID Column -->
@@ -28,10 +28,25 @@
           <td mat-cell *matCellDef="let request">{{ request.description }}</td>
         </ng-container>
 
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Montant</th>
+          <td mat-cell *matCellDef="let request">{{ request.amount }}</td>
+        </ng-container>
+
         <!-- Status Column -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Statut</th>
-          <td mat-cell *matCellDef="let request">{{ request.status }}</td>
+          <td mat-cell *matCellDef="let request">
+            <mat-icon [ngClass]="{
+              'waiting-icon': request.status === 'WAITING',
+              'pending-icon': request.status === 'PENDING',
+              'done-icon': request.status === 'DONE',
+              'refused-icon': request.status === 'REFUSED'
+            }">
+              {{ getStatusIcon(request.status) }}
+            </mat-icon>
+          </td>
         </ng-container>
 
         <!-- Actions Column -->

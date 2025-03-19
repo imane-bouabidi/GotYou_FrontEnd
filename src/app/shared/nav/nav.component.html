@@ -27,6 +27,7 @@
     </ul>
   </nav>
   <ng-container *ngIf="isAuthenticated()">
+    <a routerLink="profile">
   <div class="flex items-center space-x-4">
 <!--    <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">Join</button>-->
 <!--    <button class="border border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-50 transition">{{userName}}</button>-->
@@ -39,5 +40,6 @@
       <p class="text-sm font-medium text-gray-800">{{userName}}</p>
     </div>
   </div>
+    </a>
     </ng-container>
 </header>

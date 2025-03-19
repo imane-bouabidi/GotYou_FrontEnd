@@ -22,19 +22,44 @@ export class RequestService {
       'Authorization': `Bearer ${token}`
     });
   }
+
   save(request: CreateRequestDto): Observable<any> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const headers = this.getToken();
 
     return this.http.get<Student>(`${this.userApiUrl}/current`, { headers }).pipe(
       switchMap((student: Student) => {
-        request.student.id = student.id;
-        console.log(request.student.id);
+          request.studentId = student.id;
+
+
+        console.log(request.studentId);
         return this.http.post<any>(`${this.apiUrl}`, request, { headers });
       })
     );
+  }
+
+  // save(request: CreateRequestDto): Observable<any> {
+  //   const token = this.authService.getToken();
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  //
+  //   return this.http.get<Student>(`${this.userApiUrl}/current`, { headers }).pipe(
+  //     switchMap((student: Student) => {
+  //       request.student.id = student.id;
+  //       console.log(request.student.id);
+  //       return this.http.post<any>(`${this.apiUrl}`, request, { headers });
+  //     })
+  //   );
+  // }
+
+  update(request: Request): Observable<any> {
+    const headers = this.getToken();
+    return this.http.put<any>(`${this.apiUrl}/${request.id}`, request, { headers });
+  }
+
+  delete(id: number): Observable<any> {
+    const headers = this.getToken();
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers });
   }
 
   getAllRequests():Observable<Request[]>{

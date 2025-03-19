@@ -1,57 +1,57 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {Request} from '../../../core/models/Request.model';
-import {StudentService} from '../../../core/services/student/student.service';
-import { MatDialog } from '@angular/material/dialog';
+// src/app/features/dashboard/student-dashboard/student-dashboard.component.ts
 
+import { Component, OnInit } from '@angular/core';
+import { Request } from '../../../core/models/Request.model';
+import { StudentService } from '../../../core/services/student/student.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RequestService } from '../../../core/services/request/request.service';
+import { AddRequestDialogComponent } from '../dialog/add-request-dialog/add-request-dialog.component';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {
   MatCell,
-  MatCellDef, MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow,
+  MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {MatIcon} from '@angular/material/icon';
-import {MatToolbar} from '@angular/material/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {AddRequestDialogComponent} from '../dialog/add-request-dialog/add-request-dialog.component';
-import {MatSnackBarContainer} from '@angular/material/snack-bar';
+import {MatIconButton} from '@angular/material/button';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [
-    MatTable,
-    MatIcon,
-    MatToolbar,
-    MatRowDef,
-    MatHeaderRow,
-    MatRow,
-    MatIconButton,
-    MatCell,
-    MatHeaderCell,
-    MatCellDef,
-    MatHeaderRowDef,
-    MatHeaderCellDef,
-    MatColumnDef,
-    MatButton,
-    MatSnackBarContainer
-  ],
   templateUrl: './student-dashboard.component.html',
   standalone: true,
-  styleUrl: './student-dashboard.component.scss'
+  imports: [
+    MatToolbar,
+    MatIcon,
+    MatTable,
+    MatColumnDef,
+    MatCell,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatIconButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    NgClass
+  ],
+  styleUrls: ['./student-dashboard.component.scss']
 })
-export class StudentDashboardComponent implements OnInit{
-
+export class StudentDashboardComponent implements OnInit {
   requests!: Request[];
-  StudentService= inject(StudentService);
-  displayedColumns: string[] = ['id', 'title', 'description', 'status', 'actions'];
-
+  displayedColumns: string[] = ['id', 'title', 'description', 'amount', 'status', 'actions'];
 
   constructor(
     private studentService: StudentService,
-    private dialog: MatDialog
+    private requestService: RequestService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -59,22 +59,35 @@ export class StudentDashboardComponent implements OnInit{
   }
 
   loadRequests(): void {
-    console.log("here");
     this.studentService.getStudentRequests().subscribe({
       next: (data) => {
         this.requests = data;
-        console.log("data : " + data);
       },
       error: (err) => {
         console.error('Error fetching requests:', err);
       },
     });
-        console.log("requests : " + this.requests);
+  }
+
+  getStatusIcon(status: string): string {
+    switch (status) {
+      case 'WAITING':
+        return 'schedule';
+      case 'PENDING':
+        return 'hourglass_empty';
+      case 'DONE':
+        return 'check_circle';
+      case 'REFUSED':
+        return 'cancel';
+      default:
+        return 'help';
+    }
   }
 
   openAddRequestDialog(): void {
     const dialogRef = this.dialog.open(AddRequestDialogComponent, {
       width: '500px',
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -85,12 +98,34 @@ export class StudentDashboardComponent implements OnInit{
   }
 
   editRequest(request: Request): void {
-    // Implement edit logic here
-    console.log('Edit request:', request);
+    const dialogRef = this.dialog.open(AddRequestDialogComponent, {
+      width: '500px',
+      data: request
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadRequests();
+      }
+    });
   }
 
   deleteRequest(request: Request): void {
-    // Implement delete logic here
-    console.log('Delete request:', request);
+    if (confirm('Are you sure you want to delete this request?')) {
+      this.requestService.delete(request.id).subscribe({
+        next: () => {
+          this.snackBar.open('Request deleted successfully', 'Close', {
+            duration: 3000
+          });
+          this.loadRequests();
+        },
+        error: (err) => {
+          console.error('Error deleting request:', err);
+          this.snackBar.open('Error deleting request', 'Close', {
+            duration: 3000
+          });
+        }
+      });
+    }
   }
 }
