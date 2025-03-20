@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../../models/User.model';
 import { Student } from '../../models/Student.model';
+import {UserDto} from '../../models/dtos/UserDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,13 @@ export class AuthService {
   private userApiUrl = 'http://localhost:8080/gotYou/api/users';
 
   private tokenSubject = new BehaviorSubject<string | null>(null);
+  private currentUser = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       this.tokenSubject.next(storedToken);
+      this.loadCurrentUser();
     }
   }
 
@@ -72,7 +75,16 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  getUserInfos(): Observable<any> {
+  getUserInfos(): Observable<User> {
+
+    const cachedUser = this.currentUser.getValue();
+    if (cachedUser) {
+      return new Observable(observer => {
+        observer.next(cachedUser);
+        observer.complete();
+      });
+    }
+
     const token = this.getToken();
 
     const headers = new HttpHeaders({
@@ -82,6 +94,15 @@ export class AuthService {
     return this.http.get<User>(`${this.userApiUrl}/current`, { headers });
   }
 
+  private loadCurrentUser(): void {
+    if (this.isAuthenticated()) {
+      this.getUserInfos().subscribe();
+    }
+  }
+
+  updateUserCache(user: User): void {
+    this.currentUser.next(user);
+  }
   redirectUser(): void {
     this.getUserInfos().subscribe({
       next: (user) => {
@@ -96,4 +117,25 @@ export class AuthService {
       }
     });
   }
+
+  uploadProfileImage(formData: FormData): Observable<{ profileImage: string }> {
+    const token = this.getToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<{ profileImage: string }>(`${this.userApiUrl}/upload-profile-image`, formData, { headers });
+  }
+
+  updateUser(userId: number, dto : UserDto): Observable<User> {
+    const token = this.getToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<User>(`${this.userApiUrl}/${userId}`, dto, { headers });
+  }
+
+
 }

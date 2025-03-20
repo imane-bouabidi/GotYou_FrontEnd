@@ -24,6 +24,7 @@ export class NavComponent implements OnInit{
     if (this.isAuthenticated()) {
       this.getUserInfo();
     }
+        console.error('user image from nav component :', this.user.profileImage);
   }
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
@@ -32,7 +33,7 @@ export class NavComponent implements OnInit{
   getUserInfo(): void {
     this.authService.getUserInfos().subscribe({
       next: (user) => {
-        this.userName = user.name || user.userName;
+        this.userName = user.userName || user.name;
         this.user = user;
       },
       error: (error) => {

@@ -7,9 +7,10 @@ export interface User {
   // address: string;
   cin: string;
   password: string;
-  birthdate: Date;
+  birthDate: Date;
   role: string;
   status: string;
+  profileImage: string;
   // situationDetails?: string;
   // situationTitle?: string;
   // startDate?: Date;
