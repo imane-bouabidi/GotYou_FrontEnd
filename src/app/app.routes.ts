@@ -8,6 +8,7 @@ import {StudentDashboardComponent} from './features/dashboard/student-dashboard/
 import {DonorDashboardComponent} from './features/donor/donor-dashboard/donor-dashboard.component';
 import {RequestDetailsComponent} from './features/donor/request-details/request-details.component';
 import {ProfileComponent} from './features/profile/profile.component';
+import {DashboardComponent} from './features/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: StudentDashboardComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'donor-dashboard', component: DonorDashboardComponent },
+  { path: 'explore', component: DonorDashboardComponent },
+  { path: 'donor-dashboard', component: DashboardComponent },
   { path: 'requests/:id', component: RequestDetailsComponent },
   { path: '**', redirectTo: '' }
 ];
