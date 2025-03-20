@@ -17,8 +17,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: StudentDashboardComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'explore', component: DonorDashboardComponent },
-  { path: 'donor-dashboard', component: DashboardComponent },
+  { path: 'donor-dashboard', component: DonorDashboardComponent },
+  { path: 'admin-dashboard', component: DashboardComponent,data: { hideNavbarFooter: true }, },
   { path: 'requests/:id', component: RequestDetailsComponent },
   { path: '**', redirectTo: '' }
 ];
