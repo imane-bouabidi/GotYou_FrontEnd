@@ -9,6 +9,7 @@ import {DonorDashboardComponent} from './features/donor/donor-dashboard/donor-da
 import {RequestDetailsComponent} from './features/donor/request-details/request-details.component';
 import {ProfileComponent} from './features/profile/profile.component';
 import {DashboardComponent} from './features/admin/dashboard/dashboard.component';
+import {UsersComponent} from './features/admin/users/users.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'donor-dashboard', component: DonorDashboardComponent },
   { path: 'admin-dashboard', component: DashboardComponent,data: { hideNavbarFooter: true }, },
+  { path: 'admin/users', component: UsersComponent, data: { hideNavbarFooter: true } },
   { path: 'requests/:id', component: RequestDetailsComponent },
   { path: '**', redirectTo: '' }
 ];

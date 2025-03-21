@@ -1,4 +1,4 @@
-<app-nav *ngIf="showNavbar && !isDonorDashboard"></app-nav>
-<app-sidebar *ngIf="isDonorDashboard"></app-sidebar>
+<app-nav *ngIf="showNavbar"></app-nav>
+<app-sidebar *ngIf="isAdminDashboard"></app-sidebar>
 <router-outlet></router-outlet>
 <app-footer *ngIf="showNavbarFooter"></app-footer>

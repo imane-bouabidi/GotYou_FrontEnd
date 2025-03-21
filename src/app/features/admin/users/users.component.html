@@ -1,0 +1,78 @@
+<div class="relative bg-yellow-50 overflow-hidden max-h-screen">
+  <app-sidebar></app-sidebar>
+  <main class="ml-60 pt-16 max-h-screen overflow-auto">
+    <div class="px-6 py-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-3xl p-8 mb-5 shadow-md">
+          <h1 class="text-3xl font-bold mb-10 text-gray-800">Gestion des Utilisateurs</h1>
+
+          <!-- Tableau des utilisateurs -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">Nom</th>
+                <th scope="col" class="px-6 py-3">Email</th>
+                <th scope="col" class="px-6 py-3">Rôle</th>
+                <th scope="col" class="px-6 py-3">Statut</th>
+                <th scope="col" class="px-6 py-3">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users" class="bg-white border-b hover:bg-gray-50">
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  {{ user.name }} {{ user.lastName }}
+                </td>
+                <td class="px-6 py-4">{{ user.email }}</td>
+                <td class="px-6 py-4">{{ user.role }}</td>
+                <td class="px-6 py-4">
+                    <span [ngClass]="{
+                      'px-2 py-1 rounded-full text-xs font-medium': true,
+                      'bg-green-100 text-green-800': user.status === 'APPROVED',
+                      'bg-yellow-100 text-yellow-800': user.status === 'PENDING',
+                      'bg-red-100 text-red-800': user.status === 'REJECTED'
+                    }">
+                      {{ user.status }}
+                    </span>
+                </td>
+                <td class="px-6 py-4 flex items-center space-x-2">
+                  <!-- Menu déroulant pour modifier le statut -->
+                  <select
+                    [(ngModel)]="user.status"
+                    (change)="updateUserStatus(user)"
+                    class="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  >
+                    <option value="APPROVED">Approuvé</option>
+                    <option value="PENDING">En attente</option>
+                    <option value="REJECTED">Rejeté</option>
+                  </select>
+                  <!-- Bouton Modifier -->
+                  <button
+                    (click)="editUser(user)"
+                    class="text-blue-600 hover:text-blue-800"
+                    title="Modifier"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                  </button>
+                  <!-- Bouton Bannir -->
+                  <button
+                    (click)="banUser(user)"
+                    class="text-red-600 hover:text-red-800"
+                    title="Bannir"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
