@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        console.log('URL:', event.urlAfterRedirects);
         this.isAdminDashboard = event.urlAfterRedirects.startsWith('/admin');
         this.showNavbar = !this.isAdminDashboard;
         this.showNavbarFooter = !this.isAdminDashboard;

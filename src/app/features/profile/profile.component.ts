@@ -133,7 +133,6 @@ export class ProfileComponent implements OnInit {
       next: (updatedUser) => {
         this.user = { ...updatedUser, profileImage: this.user.profileImage };
 
-        // Mettre à jour le cache utilisateur
         this.authService.updateUserCache(this.user);
 
         this.messageService.add({

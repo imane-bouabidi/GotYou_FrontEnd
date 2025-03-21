@@ -61,6 +61,7 @@ export class StudentDashboardComponent implements OnInit {
   loadRequests(): void {
     this.studentService.getStudentRequests().subscribe({
       next: (data) => {
+        console.log(typeof data[0].status)
         this.requests = data;
       },
       error: (err) => {

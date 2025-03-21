@@ -5,6 +5,7 @@ import {CreateRequestDto} from '../../models/dtos/CreateRequestDto.models';
 import {Student} from '../../models/Student.model';
 import {AuthService} from '../auth/auth.service';
 import {Request} from '../../models/Request.model';
+import {RequestStatus} from '../../models/enums/request-status.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import {Request} from '../../models/Request.model';
 export class RequestService {
   private apiUrl = 'http://localhost:8080/gotYou/api/requests';
   private userApiUrl = 'http://localhost:8080/gotYou/api/users';
+  private adminApiUrl = 'http://localhost:8080/gotYou/api/admin';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -77,5 +79,10 @@ export class RequestService {
   searchRequests(keyword: string): Observable<Request[]> {
     const headers = this.getToken();
     return this.http.get<Request[]>(`${this.apiUrl}/search?keyword=${keyword}`, { headers });
+  }
+
+  updateStudentRequestStatus(requestId: number, status: RequestStatus): Observable<Request> {
+    const headers = this.getToken();
+    return this.http.put<Request>(`${this.adminApiUrl}/student-requests/status/${requestId}`, status, { headers });
   }
 }

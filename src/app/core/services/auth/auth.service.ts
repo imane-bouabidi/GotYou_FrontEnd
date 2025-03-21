@@ -110,7 +110,8 @@ export class AuthService {
           this.router.navigate(['/dashboard']);
         } else if (user.role === "DONOR") {
           this.router.navigate(['/donor-dashboard']);
-        }
+        }else
+          this.router.navigate(['/admin-dashboard'])
       },
       error: (err) => {
         console.error("Erreur lors de la récupération des infos utilisateur:", err);
@@ -137,5 +138,44 @@ export class AuthService {
     return this.http.put<User>(`${this.userApiUrl}/${userId}`, dto, { headers });
   }
 
+  getAllUsers(): Observable<User[]> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<User[]>(this.userApiUrl, { headers });
+  }
 
+  updateUserStatus(userId: number, status: string): Observable<User> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<User>(`${this.apiUrl}/admin/users/status/${userId}`, status, { headers });
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<any>(`${this.userApiUrl}/${userId}`, { headers });
+  }
+  banUser(userId: number): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<any>(`${this.userApiUrl}/${userId}/ban`, { headers });
+  }
+
+  updateUserRole(userId: number, role: string): Observable<User> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put<User>(`${this.apiUrl}/admin/users/${userId}/role`, role, { headers });
+  }
 }
