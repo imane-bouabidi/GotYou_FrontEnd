@@ -3,10 +3,17 @@
     <h1 class="text-4xl font-bold text-center mb-8">{{ request.title }}</h1>
 
     <div class="flex items-center gap-4 text-gray-500 mb-8">
-      <time>{{ request.requestDate }}</time>
-      <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-      <span>Autor : {{ request.student.userName }}</span>
-      <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Sans catégorie</span>
+      <div class="flex items-start gap-2">
+        <img
+          class="w-14 h-14 rounded-full object-cover"
+          [src]="'http://localhost:8080/gotYou' + request.student.profileImage || 'imgs/default-profile.png'"
+          alt="Photo de profil de {{ request.student.userName }}"
+        >
+        <div class="flex flex-col">
+          <span class="text-sm text-gray-500">{{ request.student.userName }}</span>
+          <time class="text-xs text-gray-400">{{ request.requestDate}}</time>
+        </div>
+      </div>
     </div>
 
     <div class="prose max-w-none mb-12">
