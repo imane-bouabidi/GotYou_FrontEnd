@@ -95,13 +95,14 @@ export class RequestService {
   //   }, { headers });
   // }
 
-  createCheckoutSession(requestId: number, amount: number): Observable<string> {
-    return this.http.post<string>(
-      `${this.donationUrl}/create-checkout-session`,
+  createDonationAndCheckout(requestId: number, amount: number): Observable<string> {
+    return this.http.post(
+      `${this.donationUrl}/create-donation-and-checkout`,
       null,
       {
         headers: this.getToken(),
-        params: { requestId: requestId.toString(), amount: amount.toString() }
+        params: { requestId: requestId.toString(), amount: amount.toString() },
+        responseType: 'text'
       }
     );
   }

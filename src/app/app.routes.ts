@@ -29,6 +29,7 @@ export const routes: Routes = [
   {path: 'admin/student-requests', component: StudentRequestsComponent, canActivate: [adminCheckGuard]},
   { path: 'requests/:id', component: RequestDetailsComponent },
   { path: 'donation-amount/:requestId', component: DonationAmountComponent },
+  { path: 'donation/:id', component: DonationAmountComponent },
   { path: 'success', component: SuccessComponent },
   { path: 'cancel', component: CancelComponent },
   { path: '**', redirectTo: '' }
