@@ -38,10 +38,18 @@
       <div class="text-sm text-gray-600">récoltés sur {{ request.amount }} DH</div>
     </div>
 
-    <div class="space-y-4 mb-6">
-      <button class="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
-        Je soutiens
-      </button>
+<!--        <div *ngIf="request" >-->
+<!--          <h2>{{ request.title }}</h2>-->
+<!--          <p>{{ request.description }}</p>-->
+<!--          <p>Montant requis : {{ request.amount}}</p>-->
+<!--          <button (click)="supportRequest()" >Je soutiens</button>-->
+<!--        </div>-->
+
+    <div *ngIf="request" class="space-y-4 mb-6">
+      <h2>{{ request.title }}</h2>
+      <p>{{ request.description }}</p>
+      <p>Montant requis : {{ request.amount}}</p>
+      <button class="w-full py-3 cursor-pointer   bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200" (click)="supportRequest()">Je soutiens</button>
     </div>
 
     <div class="mb-6">

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Student} from '../../../core/models/Student.model';
 import {Request} from '../../../core/models/Request.model';
 import {RequestService} from '../../../core/services/request/request.service';
 import {StudentService} from '../../../core/services/student/student.service';
-import {NgClass} from '@angular/common';
-import {RequestStatus} from '../../../core/models/enums/request-status.enum';
+import {NgClass, NgIf} from '@angular/common';
+import {Stripe} from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-request-details',
@@ -13,18 +13,21 @@ import {RequestStatus} from '../../../core/models/enums/request-status.enum';
   standalone: true,
   imports: [
     NgClass,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   styleUrls: ['./request-details.component.scss']
 })
 export class RequestDetailsComponent implements OnInit {
   student!: Student;
   request! : Request;
+  stripe: Stripe | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private requestService: RequestService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -57,5 +60,8 @@ export class RequestDetailsComponent implements OnInit {
     });
   }
 
-  protected readonly RequestStatus = RequestStatus;
+  supportRequest(): void {
+    if (!this.request) return;
+    this.router.navigate(['/donation-amount', this.request.id]);
+  }
 }

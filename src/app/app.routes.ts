@@ -12,6 +12,9 @@ import {DashboardComponent} from './features/admin/dashboard/dashboard.component
 import {UsersComponent} from './features/admin/users/users.component';
 import {adminCheckGuard} from './guards/admin/admin-check.guard';
 import {StudentRequestsComponent} from './features/admin/student-requests/student-requests.component';
+import {CancelComponent} from './features/paiement/cancel/cancel.component';
+import {SuccessComponent} from './features/paiement/success/success.component';
+import {DonationAmountComponent} from './features/paiement/donation-amount/donation-amount.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,5 +28,8 @@ export const routes: Routes = [
   { path: 'admin/users', component: UsersComponent, data: { hideNavbarFooter: true }, canActivate : [adminCheckGuard] },
   {path: 'admin/student-requests', component: StudentRequestsComponent, canActivate: [adminCheckGuard]},
   { path: 'requests/:id', component: RequestDetailsComponent },
+  { path: 'donation-amount/:requestId', component: DonationAmountComponent },
+  { path: 'success', component: SuccessComponent },
+  { path: 'cancel', component: CancelComponent },
   { path: '**', redirectTo: '' }
 ];
