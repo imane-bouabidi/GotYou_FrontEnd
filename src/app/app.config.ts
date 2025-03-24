@@ -12,6 +12,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     importProvidersFrom(MatSnackBarModule),
     provideHttpClient(),
-    provideNgxStripe('pk_test_51R697o4RRHFJGYKcR8uR8x8e8iL0h1ZtNqZ946tDROaIO2S8DxcEemGHdQG1WNzak5Erk004RzyQP0F')
+    provideNgxStripe('pk_test_51R697o4RRHFJGYKcL3XkPjrym8HUwy1mnYbLqVzelPL4voY7XKXA68Cq6W1royCBFg0mRCgUOBxBGVUh2GYmOKZ800SDsaYRzZ')
   ]
 };
