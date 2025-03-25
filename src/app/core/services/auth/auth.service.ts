@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../../models/User.model';
 import { Student } from '../../models/Student.model';
-import {UserDto} from '../../models/dtos/UserDto.model';
+import { UserDto } from '../../models/dtos/UserDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +76,6 @@ export class AuthService {
   }
 
   getUserInfos(): Observable<User> {
-
     const cachedUser = this.currentUser.getValue();
     if (cachedUser) {
       return new Observable(observer => {
@@ -84,14 +83,7 @@ export class AuthService {
         observer.complete();
       });
     }
-
-    const token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get<User>(`${this.userApiUrl}/current`, { headers });
+    return this.http.get<User>(`${this.userApiUrl}/current`);
   }
 
   private loadCurrentUser(): void {
@@ -103,6 +95,7 @@ export class AuthService {
   updateUserCache(user: User): void {
     this.currentUser.next(user);
   }
+
   redirectUser(): void {
     this.getUserInfos().subscribe({
       next: (user) => {
@@ -110,8 +103,9 @@ export class AuthService {
           this.router.navigate(['/dashboard']);
         } else if (user.role === "DONOR") {
           this.router.navigate(['/donor-dashboard']);
-        }else
-          this.router.navigate(['/admin-dashboard'])
+        } else {
+          this.router.navigate(['/admin-dashboard']);
+        }
       },
       error: (err) => {
         console.error("Erreur lors de la récupération des infos utilisateur:", err);
@@ -120,62 +114,30 @@ export class AuthService {
   }
 
   uploadProfileImage(formData: FormData): Observable<{ profileImage: string }> {
-    const token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.post<{ profileImage: string }>(`${this.userApiUrl}/upload-profile-image`, formData, { headers });
+    return this.http.post<{ profileImage: string }>(`${this.userApiUrl}/upload-profile-image`, formData);
   }
 
-  updateUser(userId: number, dto : UserDto): Observable<User> {
-    const token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.put<User>(`${this.userApiUrl}/${userId}`, dto, { headers });
+  updateUser(userId: number, dto: UserDto): Observable<User> {
+    return this.http.put<User>(`${this.userApiUrl}/${userId}`, dto);
   }
 
   getAllUsers(): Observable<User[]> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<User[]>(this.userApiUrl, { headers });
+    return this.http.get<User[]>(this.userApiUrl);
   }
 
   updateUserStatus(userId: number, status: string): Observable<User> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<User>(`${this.apiUrl}/admin/users/status/${userId}`, status, { headers });
+    return this.http.put<User>(`${this.apiUrl}/admin/users/status/${userId}`, status);
   }
 
   deleteUser(userId: number): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.delete<any>(`${this.userApiUrl}/${userId}`, { headers });
+    return this.http.delete<any>(`${this.userApiUrl}/${userId}`);
   }
+
   banUser(userId: number): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.delete<any>(`${this.userApiUrl}/${userId}/ban`, { headers });
+    return this.http.delete<any>(`${this.userApiUrl}/${userId}/ban`);
   }
 
   updateUserRole(userId: number, role: string): Observable<User> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<User>(`${this.apiUrl}/admin/users/${userId}/role`, role, { headers });
+    return this.http.put<User>(`${this.apiUrl}/admin/users/${userId}/role`, role);
   }
 }
