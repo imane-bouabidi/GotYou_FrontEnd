@@ -1,2 +1,12 @@
-<h2>Paiement réussi ! Merci pour votre don.</h2>
-<h1>{{ message }}</h1>
+<div>
+  <h2>Paiement réussi ! Merci pour votre don.</h2>
+  <h3>Votre historique de dons :</h3>
+  <ul *ngIf="donations.length > 0; else noDonations">
+    <li *ngFor="let donation of donations">
+      {{ donation.amount }} $ - {{ donation.donationDate }} - Requête #{{ donation.request.id }}
+    </li>
+  </ul>
+  <ng-template #noDonations>
+    <p>Aucun don enregistré pour le moment.</p>
+  </ng-template>
+</div>

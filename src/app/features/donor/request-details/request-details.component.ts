@@ -22,6 +22,8 @@ export class RequestDetailsComponent implements OnInit {
   student!: Student;
   request! : Request;
   stripe: Stripe | null = null;
+  totalDonations: number = 0;
+  donationProgress: number = 0;
 
   constructor(
     private route: ActivatedRoute,
