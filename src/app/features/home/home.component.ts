@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NavComponent} from '../../shared/nav/nav.component';
-import {RequestService} from '../../core/services/request/request.service';
-import {Request} from '../../core/models/Request.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {DatePipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {StoryDto} from '../../core/models/dtos/StoryDto.model';
+import {StoryService} from '../../core/services/stories/story.service';
 
 @Component({
   selector: 'app-home',
@@ -15,15 +15,15 @@ import {RouterLink} from '@angular/router';
     NgOptimizedImage,
     DecimalPipe,
     NgIf,
-    RouterLink
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './home.component.html',
   standalone: true,
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements  OnInit{
-  requests! : Request[];
-
+  stories!: StoryDto[];
 
 
   features = [
@@ -64,22 +64,21 @@ export class HomeComponent implements  OnInit{
   ];
 
 
-  constructor(private requestService : RequestService) {}
+  constructor(private storyService: StoryService) {}
 
   ngOnInit() {
-    this.LoadRequests();
+    this.loadStories();
   }
 
-
-  LoadRequests(){
-    this.requestService.getAllRequests().subscribe({
-      next: (data)=>{
-        this.requests = data;
+  loadStories() {
+    this.storyService.getAllStories().subscribe({
+      next: (data) => {
+        this.stories = data;
       },
       error: (err) => {
-        console.error('Error fetching student:', err);
+        console.error('Error fetching stories:', err);
       }
-    })
+    });
   }
 
 

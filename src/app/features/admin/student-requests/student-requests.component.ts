@@ -45,6 +45,9 @@ export class StudentRequestsComponent implements OnInit {
   }
 
   approveRequest(requestId: number) {
+    this.authService.getUserInfos().subscribe(user => {
+      console.log('Utilisateur actuel:', user);
+    });
     this.requestService.updateStudentRequestStatus(requestId, RequestStatus.DONE).subscribe({
       next: (updatedRequest) => {
         const request = this.requests.find(r => r.id === requestId);
@@ -54,10 +57,10 @@ export class StudentRequestsComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors de l’approbation de la requête:', err);
-        if (err.status === 401) {
-          alert('Non autorisé. Veuillez vous reconnecter.');
-          this.router.navigate(['/login']);
-        }
+        // if (err.status === 401) {
+        //   alert('Non autorisé. Veuillez vous reconnecter.');
+        //   this.router.navigate(['/login']);
+        // }
       }
     });
   }

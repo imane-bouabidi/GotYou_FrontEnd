@@ -1,17 +1,14 @@
-<div class="w-full ">
+<div class="w-full">
   <!-- Section principale -->
   <section class="py-12 px-6 lg:px-16 flex flex-col lg:flex-row items-center justify-between max-w-screen-xl mx-auto">
     <div class="w-full lg:w-1/2 mb-8 lg:mb-0">
       <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Charity for the world better life</h1>
       <p class="text-gray-600 mb-6">We provide a trusted donation channel for charity seekers</p>
       <p class="text-gray-600 mb-8">Supporting groups and organizations</p>
-
       <div class="flex items-center space-x-4">
-<!--            <button class="bg-blue-500 text-white px-4 py-2 cursor-pointer rounded-full hover:bg-blue-600 transition">I Donate</button>-->
-        <button routerLink="/donor-dashboard" class="border cursor-pointer border-blue-900 bg-red-300 text-blue-900 px-4 py-2 rounded-full hover:bg-red-200 transition">I Donate </button>
+        <button routerLink="/donor-dashboard" class="border cursor-pointer border-blue-900 bg-red-300 text-blue-900 px-4 py-2 rounded-full hover:bg-red-200 transition">I Donate</button>
       </div>
     </div>
-
     <div class="w-full lg:w-1/2 flex justify-center">
       <img ngSrc="imgs/don.png" alt="People helping each other" height="600" width="600">
     </div>
@@ -21,7 +18,6 @@
   <section class="py-16 px-6 lg:px-16 text-center bg-gray-50 max-w-screen-xl mx-auto">
     <h3 class="text-gray-500 uppercase tracking-widest text-sm mb-4">OUR FEATURES</h3>
     <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-12">We believe we can save more life with you</h2>
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div *ngFor="let feature of features" class="p-6 bg-white rounded-lg shadow-sm">
         <div class="flex justify-center mb-4">
@@ -49,41 +45,22 @@
     </div>
   </section>
 
-  <!-- Section requests card -->
+  <!-- Section Stories -->
   <section class="py-16 px-6 lg:px-16 max-w-screen-xl mx-auto">
-    <h2 class="text-2xl font-bold text-gray-800 mb-8">Sujets à la Une</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Histoires Inspirantes</h2>
     <div class="flex flex-wrap gap-6 grid lg:grid-cols-4">
-      @for(request of requests; track $index ){
-        <div >
-          <!-- Carte 1 -->
+      @for (story of stories; track $index) {
+        <div>
+          <!-- Carte Story -->
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <a routerLink="/requests/{{request.id}}">
+            <a href="#"> <!-- Pas de routerLink car pas de page spécifique pour les stories pour l'instant -->
               <img class="w-full h-48 object-cover"
                    src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80"
-                   alt="Image de la récolte de fonds">
+                   alt="Image de la story">
               <div class="p-6">
-                <div class="flex items-center mb-2">
-                  <img
-                    class="w-8 h-8 rounded-full object-cover mr-2"
-                    [src]="'http://localhost:8080/gotYou' + request.student.profileImage || 'imgs/default-profile.png'"
-                    alt="Photo de profil de {{ request.student.userName }}"
-                  >
-                  <span class="text-sm text-gray-500">{{ request.student.userName }}</span>
-                </div>                <h3 class="text-lg font-semibold mb-2">{{ request.title }}</h3>
-                <p class="text-gray-600 text-sm mb-4">{{ request.description }}</p>
-
-                <!--                <div class="flex justify-between text-sm text-gray-500 mb-2">-->
-                <!--                  <span>Last donation 11 days ago</span>-->
-                <!--                </div>-->
-
-                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                  <div class="bg-blue-500 h-2 rounded-full" style="width: 82%"></div>
-                </div>
-
-                <p class="text-sm">
-                  <span class="font-bold">€82,203</span> raised
-                  <span class="text-gray-500">of {{ request.amount }} DH</span>
-                </p>
+                <h3 class="text-lg font-semibold mb-2">{{ story.title }}</h3>
+                <p class="text-gray-600 text-sm mb-4">{{ story.description }}</p>
+                <p class="text-sm text-gray-500">Publié le : {{ story.datePublished | date:'mediumDate' }}</p>
               </div>
             </a>
           </div>
@@ -95,7 +72,6 @@
   <!-- Section blue -->
   <section class="py-16 px-6 lg:px-16 bg-blue-500 text-white max-w-screen-xl mx-auto">
     <h2 class="text-xl font-medium mb-8 text-center">You can help lots of people by donating</h2>
-
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       <div *ngFor="let stat of stats" class="text-center">
         <div class="mb-2">

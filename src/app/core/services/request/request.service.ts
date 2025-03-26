@@ -50,7 +50,7 @@ export class RequestService {
     return this.http.get<Request[]>(`${this.apiUrl}/search?keyword=${keyword}`);
   }
 
-  updateStudentRequestStatus(requestId: number, status: RequestStatus): Observable<Request> {
+  updateStudentRequestStatus(requestId: number, status: string): Observable<Request> {
     return this.http.put<Request>(`${this.adminApiUrl}/student-requests/status/${requestId}`, status);
   }
 
